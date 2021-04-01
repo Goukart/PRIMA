@@ -40,6 +40,7 @@ var L01_FirstFUDGE_v2;
         // Create a material so meshes can be rendered and seen on canvas
         // *When using multiple colors defining them into variables would be better, to avoid
         // constructing too many objects with the 'new' operator*
+        // This creates a white square, in one solid color without shadows, because of the shader
         /**
          * The Material needs a name and optionally a:
          * Shader:
@@ -130,8 +131,9 @@ var L01_FirstFUDGE_v2;
         cmpCamera.mtxPivot.rotateY(180);
         /*
         The camera component has a "pivot point", which can be translated and rotated to change the camera
-        perspective. To move or rotate, the camera you hate to use its pivot-matrix, mtxPivot.
-        Other Component use the mtxLocal Matrix to accomplish the dame thing
+        perspective. To move or rotate, the camera you have to use its pivot-matrix, 'mtxPivot'.
+        Other objects may use the 'mtxLocal' Matrix to accomplish the same thing, but only if that object/node
+        has a transform-component attached to it.
         */
         // The last missing thing to draw to the canvas is the viewport
         // The viewport links the camera (projection of the scene or the desired perspective to draw),
