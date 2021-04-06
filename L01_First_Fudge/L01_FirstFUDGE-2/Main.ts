@@ -144,24 +144,24 @@ namespace L01_FirstFUDGE_v2 {
                /
              +z
         */
-       // Like in Math 'x' goes right and 'y' goes up, but 'z' comes toward us
-       // To visualize take your right hand with your palm facing you. Now make an "L" shape and spread
-       // your middle finger towards you, trying to keep 90° angles between your fingers. Your thumb is
-       // 'x', your index finger is 'y' and you middle finger is 'z'.
-       //
-       // Now by default a quad lies on the x-y-plane facing positive 'z'. so 'z' is moving forth and back.
-       //
-       // Since both Camera and the quad are at origin and facing the same direction, so you cant see it.
-       // to face the camera at the quad you need to move in +z and turn the camera around the y-axis,
-       // which is up:
-       cmpCamera.mtxPivot.translateZ(3);
-       cmpCamera.mtxPivot.rotateY(180);
-       /*
-       The camera component has a "pivot point", which can be translated and rotated to change the camera
-       perspective. To move or rotate, the camera you have to use its pivot-matrix, 'mtxPivot'.
-       Other objects may use the 'mtxLocal' Matrix to accomplish the same thing, but only if that object/node
-       has a transform-component attached to it.
-       */
+        // Like in Math 'x' goes right and 'y' goes up, but 'z' comes toward us
+        // To visualize take your right hand with your palm facing you. Now make an "L" shape and spread
+        // your middle finger towards you, trying to keep 90° angles between your fingers. Your thumb is
+        // 'x', your index finger is 'y' and you middle finger is 'z'.
+        //
+        // Now by default a quad lies on the x-y-plane facing positive 'z'. so 'z' is moving forth and back.
+        //
+        // Since both Camera and the quad are at origin and facing the same direction, so you cant see it.
+        // to face the camera at the quad you need to move in +z and turn the camera around the y-axis,
+        // which is up:
+        cmpCamera.mtxPivot.translateZ(3);
+        cmpCamera.mtxPivot.rotateY(180);
+        /*
+        The camera component has a "pivot point", which can be translated and rotated to change the camera
+        perspective. To move or rotate, the camera you have to use its pivot-matrix, 'mtxPivot'.
+        Other objects may use the 'mtxLocal' Matrix to accomplish the same thing, but only if that object/node
+        has a transform-component attached to it.
+        */
 
 
 

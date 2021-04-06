@@ -303,7 +303,7 @@ namespace L01_FirstFUDGE_v3at60fps {
         const rotSpeed: number = 90;
         // *Ideally this would be defined somewhere else, because we don't need to redefine it every frame*
 
-        
+
         // Because [time * speed = distance], we simply calculate the distance it should have moved and
         // move it by that value.
         // To get the time elapsed since last cycle/call/trigger, we use ƒ.Loop.timeFrameReal, since
