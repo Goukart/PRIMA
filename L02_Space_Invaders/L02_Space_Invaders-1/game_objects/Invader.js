@@ -17,7 +17,7 @@ var L02_Space_Invaders_v1;
             this.scale = ƒ.Vector3.ONE();
             // But we do want to define the scale variable to scale the texture and hit box
             this.scale = _scale;
-            const mesh = new ƒ.MeshCube("CubeMesh");
+            const mesh = new ƒ.MeshSprite("SpriteMesh");
             this.applyMaterial(mesh, _material);
         }
         applyMaterial(_mesh, _material) {
@@ -40,12 +40,6 @@ var L02_Space_Invaders_v1;
         constructor(_position) {
             super("SquidInvader", _position, Squid.scale, squidMaterial);
             this.texture = new ƒ.Node("SquidInvaderTexture");
-            //this.applyMaterial(squidMaterial);
-            //this.applyMaterial(squidMaterial);
-            //this.texture.name = "SquidInvaderTexture";
-            //this.texture.mtxLocal.scale(this.scale);
-            //this.texture.addComponent(new ƒ.ComponentMesh(new ƒ.MeshCube("CubeMesh")));
-            //this.texture.getComponent(ƒ.ComponentMesh).mtxPivot.scale(this.scale);
         }
     }
     Squid.scale = new ƒ.Vector3(8, 8, 1);

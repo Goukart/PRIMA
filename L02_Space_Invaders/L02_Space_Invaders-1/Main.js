@@ -68,9 +68,9 @@ var L02_Space_Invaders_v1;
         const cmpCamera = new ƒ.ComponentCamera();
         // Move and rotate camera to point at the quad
         // to test each thing:
-        cmpCamera.mtxPivot.translateZ(40);
-        //cmpCamera.mtxPivot.translateZ(160);
-        //cmpCamera.mtxPivot.translateY(50);
+        //cmpCamera.mtxPivot.translateZ(40);
+        cmpCamera.mtxPivot.translateZ(200);
+        cmpCamera.mtxPivot.translateY(50);
         cmpCamera.mtxPivot.rotateY(180);
         // Here we tell the viewport alle the things it needs to know
         viewport.initialize("Viewport", // The name of the object
@@ -79,11 +79,12 @@ var L02_Space_Invaders_v1;
         canvas // Where to render to, here the html canvas so the user can see it
         );
         // Build the Level
-        L02_Space_Invaders_v1.buildLevel(root, cmpCamera, new L02_Space_Invaders_v1.Defender());
+        L02_Space_Invaders_v1.buildLevel(root, cmpCamera, L02_Space_Invaders_v1.Cannon.getInstance());
         // Start the game loop in real time mode at 60 fps
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
         // To couple our game to the engine with the 'update' function. 'update' gets called every frame
         ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
+        viewport.draw();
     }
     function update(_event) {
         // Move the node with the quad mesh:
@@ -113,7 +114,7 @@ var L02_Space_Invaders_v1;
         Now the elapsed time can be reused without recalculating it and it's more understandable
         */
         // Things are happening, but we can't see anything if we don't draw the changes
-        viewport.draw();
+        //viewport.draw();
     }
 })(L02_Space_Invaders_v1 || (L02_Space_Invaders_v1 = {}));
 //# sourceMappingURL=Main.js.map

@@ -82,9 +82,9 @@ namespace L02_Space_Invaders_v1 {
         const cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
         // Move and rotate camera to point at the quad
         // to test each thing:
-        cmpCamera.mtxPivot.translateZ(40);
-        //cmpCamera.mtxPivot.translateZ(160);
-        //cmpCamera.mtxPivot.translateY(50);
+        //cmpCamera.mtxPivot.translateZ(40);
+        cmpCamera.mtxPivot.translateZ(200);
+        cmpCamera.mtxPivot.translateY(50);
         cmpCamera.mtxPivot.rotateY(180);
 
 
@@ -99,7 +99,7 @@ namespace L02_Space_Invaders_v1 {
 
 
         // Build the Level
-        buildLevel(root, cmpCamera, new Defender());
+        buildLevel(root, cmpCamera, Cannon.getInstance());
 
         // Start the game loop in real time mode at 60 fps
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
@@ -107,6 +107,8 @@ namespace L02_Space_Invaders_v1 {
 
         // To couple our game to the engine with the 'update' function. 'update' gets called every frame
         ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
+
+        viewport.draw();
     }
 
     function update(_event: Event): void {
@@ -144,6 +146,6 @@ namespace L02_Space_Invaders_v1 {
 
 
         // Things are happening, but we can't see anything if we don't draw the changes
-        viewport.draw();
+        //viewport.draw();
     }
 }

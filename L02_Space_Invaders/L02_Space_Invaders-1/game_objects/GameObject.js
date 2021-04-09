@@ -12,17 +12,15 @@ var L02_Space_Invaders_v1;
             // the ƒ.ComponentTransform component.
             // This way we can later move the mesh around in the 'update' function
             this.addComponent(new ƒ.ComponentTransform());
-            if (_material) {
-                this.applyMaterial(_mesh, _material);
-            }
+            this.applyMaterial(_mesh, _material);
             this.mtxLocal.scale(this.scale);
             // Conversion from relative translation to absolute
             const absTranslation = new ƒ.Vector3(_position.x * (this.scale.x == 0 ? 0 : 1 / this.scale.x), _position.y * (this.scale.y == 0 ? 0 : 1 / this.scale.y), _position.z * (this.scale.z == 0 ? 0 : 1 / this.scale.z));
             this.mtxLocal.translate(absTranslation);
         }
         applyMaterial(_mesh, _material) {
-            // Define a default mesh, in this case a Cube
-            let defaultMesh = new ƒ.MeshCube("CubeMesh");
+            // Define a default mesh, in this case a Quad
+            let defaultMesh = new ƒ.MeshQuad("QuadMesh");
             // Attach the mesh as a component to the node
             this.texture.addComponent(new ƒ.ComponentMesh(_mesh || defaultMesh));
             // Create a default material so the mesh can be rendered and seen on canvas

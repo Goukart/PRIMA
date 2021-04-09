@@ -3,7 +3,7 @@ namespace L02_Space_Invaders_v1 {
 
     export class GameObject extends ƒ.Node {
         protected readonly scale: ƒ.Vector3;
-        protected readonly texture: ƒ.Node = new ƒ.Node("GameObjectTexture");
+        protected readonly facade: ƒ.Node = new ƒ.Node("GameObjectFacade");
 
         public constructor(_name: string, _position: ƒ.Vector3, _mesh?: ƒ.Mesh, _material?: ƒ.Material, _scale?: ƒ.Vector3,) {
             super(_name);
@@ -16,12 +16,11 @@ namespace L02_Space_Invaders_v1 {
             // This way we can later move the mesh around in the 'update' function
             this.addComponent(new ƒ.ComponentTransform());
 
-            if(_material){
-                this.applyMaterial(_mesh, _material);
-            }
+            this.applyMaterial(_mesh, _material);
 
-            this.mtxLocal.scale(this.scale);
+            //this.mtxLocal.scale(this.scale); // not needed, because this must stay 1, separate node for appearance
 
+            /* This also becomes obsolete with new facade node
             // Conversion from relative translation to absolute
             const absTranslation: ƒ.Vector3 = new ƒ.Vector3(
                 _position.x * (this.scale.x == 0 ? 0 : 1 / this.scale.x),
@@ -30,14 +29,16 @@ namespace L02_Space_Invaders_v1 {
             );
 
             this.mtxLocal.translate(absTranslation);
+            */
+            this.mtxLocal.translate(_position);
         }
 
         protected applyMaterial(_mesh: ƒ.Mesh, _material: ƒ.Material): void {
-            // Define a default mesh, in this case a Cube
-            let defaultMesh: ƒ.Mesh = new ƒ.MeshCube("CubeMesh");
+            // Define a default mesh, in this case a Quad
+            let defaultMesh: ƒ.Mesh = new ƒ.MeshQuad("QuadMesh");
 
             // Attach the mesh as a component to the node
-            this.texture.addComponent(new ƒ.ComponentMesh(_mesh || defaultMesh));
+            this.facade.addComponent(new ƒ.ComponentMesh(_mesh || defaultMesh));
 
             // Create a default material so the mesh can be rendered and seen on canvas
             let defaultMaterial: ƒ.Material = new ƒ.Material(
@@ -51,13 +52,13 @@ namespace L02_Space_Invaders_v1 {
             let cmpMaterial: ƒ.ComponentMaterial = new ƒ.ComponentMaterial(_material || defaultMaterial);
 
             // Now link the material to the node
-            this.texture.addComponent(cmpMaterial);
+            this.facade.addComponent(cmpMaterial);
 
-            // Scale texture repetition
-            //this.texture.getComponent(ƒ.ComponentMaterial).mtxPivot.scale(this.scale.toVector2());
+            // Scale facade repetition
+            //this.facade.getComponent(ƒ.ComponentMaterial).mtxPivot.scale(this.scale.toVector2());
 
             // Add the material to the node as a separate node
-            this.addChild(this.texture);
+            this.addChild(this.facade);
         }
 
         public translate(): void {

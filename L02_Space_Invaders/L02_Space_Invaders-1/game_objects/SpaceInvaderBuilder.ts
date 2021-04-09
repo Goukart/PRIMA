@@ -65,7 +65,14 @@ namespace L02_Space_Invaders_v1 {
                     sliceScale
                 );
 
-                this.mtxLocal.translate(_position);
+
+                // Conversion from relative translation to absolute
+                const absTranslation: ƒ.Vector3 = new ƒ.Vector3(
+                    _position.x * (1 / this.width),
+                    _position.y * (1 / this.height),
+                    _position.z
+                );
+                this.mtxLocal.translate(absTranslation);
 
                 this.addChild(slice);
             }
@@ -76,24 +83,119 @@ namespace L02_Space_Invaders_v1 {
         }
     }
 
+    export class Projectile extends GameObject {
+        private static readonly mesh: ƒ.MeshQuad = new ƒ.MeshQuad("QuadMesh");
+        private static readonly material: ƒ.Material = new ƒ.Material(
+            "ProjectileMaterial",
+            ƒ.ShaderUniColor,
+            new ƒ.CoatColored(ƒ.Color.CSS("WHITE"))
+        );
+        private static scale: ƒ.Vector3 = new ƒ.Vector3(1, 4, 0);
 
-    export function buildLevel(_scene: ƒ.Node, _cmpCamera: ƒ.ComponentCamera, _defender: Defender): void {
-        let some: Invader = new Squid(new ƒ.Vector3(-12, 0, 0));
-        let gO: GameObject = new GameObject("SomeGameObject", new ƒ.Vector3(0, -8, 0));
+        constructor(_position: ƒ.Vector3) {
+            super("Projectile", _position, Projectile.mesh, Projectile.material, Projectile.scale);
 
+        }
+    }
+
+
+    export function buildLevel(_scene: ƒ.Node, _cmpCamera: ƒ.ComponentCamera, _cannon: Cannon): void {
+        /*
+        let some: Invader = new Squid(new ƒ.Vector3(-13.5, 0, 0));
         _scene.addChild(some);
-
-        some = new Crab(new ƒ.Vector3(-3, 0, 0));
-        _scene.addChild(some);
-
-        some = new Octopus(new ƒ.Vector3(9, 0, 0));
-        _scene.addChild(some);
-
-        const sh = new Shield("Shield", new ƒ.Vector3(0, 20, 0));
-        _scene.addChild(sh);
-
-
         console.log(some);
 
+        let gO: GameObject = new GameObject("SomeGameObject", new ƒ.Vector3(0, 5, 0));
+        _scene.addChild(gO);
+        console.log(gO);
+
+        const sh = new Shield("Shield", new ƒ.Vector3(0, 0, 0));
+        _scene.addChild(sh);
+        console.log(sh);
+        */
+
+
+        _scene.addChild(createInvaders());
+
+        _scene.addChild(createShields());
+
+        for (let index = 0; index < 4; index++) {
+            _scene.addChild(new Projectile(new ƒ.Vector3(index, index + 8, 0)));
+        }
+        
+        _scene.addChild(Cannon.getInstance())
+
+    }
+
+    function createInvaders(): ƒ.Node {
+        const rows: number = 5;
+        const numberOfInvaders: number = 11;
+        const numberOfSpaces: number = numberOfInvaders - 1;
+
+        // 8 places them edge to edge, good to check alignment
+        const spaceY: number = 16;
+        // The actual space between them is 3 (total space from center to center is 3 + 12 (widest invader))
+        const spaceX: number = 15;
+        // Put them above the canon and shields 
+        const offsetY: number = 45
+        // Off set to the left to center them
+        const offsetX: number = - ((numberOfSpaces / 2) * spaceX);
+
+
+        const allInvaders: ƒ.Node = new ƒ.Node("AllInvaders");
+        let invader: Invader;
+        for (let row = 0; row < rows; row++) {
+            for (let invaderInRow = 0; invaderInRow < numberOfInvaders; invaderInRow++) {
+                switch (row) {
+                    case 4:
+                        // The squid must be off set to the left by half a unit to align like in the original
+                        invader = new Squid(new ƒ.Vector3(invaderInRow * spaceX + offsetX - 0.5, row * spaceY + offsetY, 0));
+                        break;
+
+                    case 3:
+                    case 2:
+                        invader = new Crab(new ƒ.Vector3(invaderInRow * spaceX + offsetX, row * spaceY + offsetY, 0));
+                        break;
+
+                    case 1:
+                    case 0:
+                        invader = new Octopus(new ƒ.Vector3(invaderInRow * spaceX + offsetX, row * spaceY + offsetY, 0));
+                        break;
+                }
+                allInvaders.addChild(invader);
+            }
+        }
+
+        return allInvaders;
+    }
+
+    function createShields(): ƒ.Node {
+        const shields: ƒ.Node = new ƒ.Node("Shields");
+        let shield: Shield = new Shield("Shield", ƒ.Vector3.ZERO());
+
+
+        const numberOfShields: number = 4;
+        const numberOfSpaces: number = numberOfShields - 1;
+        const spaceX: number = shield.width + 19;
+        const offsetX: number = - ((numberOfSpaces / 2) * spaceX);
+        const offsetY: number = 10;
+
+
+        for (let index = 0; index < numberOfShields; index++) {
+            const position: ƒ.Vector3 = new ƒ.Vector3(
+                index * spaceX + offsetX,
+                offsetY,
+                0
+            );
+
+            shield = new Shield(
+                "Shield_" + index,
+                position
+            );
+            shields.addChild(shield);
+        }
+        console.log(shields);
+
+        return shields;
     }
 }
