@@ -18,6 +18,7 @@ namespace L02_Space_Invaders_v2 {
         public constructor(_name: string, _position: ƒ.Vector3, _mesh?: ƒ.Mesh, _material?: ƒ.Material, _scale?: ƒ.Vector3,) {
             super(_name);
             this.scale = _scale || ƒ.Vector3.ONE();
+            this.facade.name = _name + "Facade";
 
             // Add component to move and scale the node
             this.addComponent(new ƒ.ComponentTransform());

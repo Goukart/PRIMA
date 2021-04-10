@@ -4,16 +4,83 @@ namespace L02_Space_Invaders_v2 {
     //const colors: Array<string> = new Array<string>("ALICEBLUE", "ANTIQUEWHITE", "AQUA", "AQUAMARINE", "AZURE", "BEIGE", "BISQUE", /*"BLACK",*/ "BLANCHEDALMOND", "BLUE", "BLUEVIOLET", "BROWN", "BURLYWOOD", "CADETBLUE", "CHARTREUSE", "CHOCOLATE", "CORAL", "CORNFLOWERBLUE", "CORNSILK", "CRIMSON", "CYAN", "DARKBLUE", "DARKCYAN", "DARKGOLDENROD", "DARKGRAY", "DARKGREY", "DARKGREEN", "DARKKHAKI", "DARKMAGENTA", "DARKOLIVEGREEN", "DARKORANGE", "DARKORCHID", "DARKRED", "DARKSALMON", "DARKSEAGREEN", "DARKSLATEBLUE", "DARKSLATEGRAY", "DARKSLATEGREY", "DARKTURQUOISE", "DARKVIOLET", "DEEPPINK", "DEEPSKYBLUE", "DIMGRAY", "DIMGREY", "DODGERBLUE", "FIREBRICK", "FLORALWHITE", "FORESTGREEN", "FUCHSIA", "GAINSBORO", "GHOSTWHITE", "GOLD", "GOLDENROD", "GRAY", "GREY", "GREEN", "GREENYELLOW", "HONEYDEW", "HOTPINK", "INDIANRED", "INDIGO", "IVORY", "KHAKI", "LAVENDER", "LAVENDERBLUSH", "LAWNGREEN", "LEMONCHIFFON", "LIGHTBLUE", "LIGHTCORAL", "LIGHTCYAN", "LIGHTGOLDENRODYELLOW", "LIGHTGRAY", "LIGHTGREY", "LIGHTGREEN", "LIGHTPINK", "LIGHTSALMON", "LIGHTSEAGREEN", "LIGHTSKYBLUE", "LIGHTSLATEGRAY", "LIGHTSLATEGREY", "LIGHTSTEELBLUE", "LIGHTYELLOW", "LIME", "LIMEGREEN", "LINEN", "MAGENTA", "MAROON", "MEDIUMAQUAMARINE", "MEDIUMBLUE", "MEDIUMORCHID", "MEDIUMPURPLE", "MEDIUMSEAGREEN", "MEDIUMSLATEBLUE", "MEDIUMSPRINGGREEN", "MEDIUMTURQUOISE", "MEDIUMVIOLETRED", "MIDNIGHTBLUE", "MINTCREAM", "MISTYROSE", "MOCCASIN", "NAVAJOWHITE", "NAVY", "OLDLACE", "OLIVE", "OLIVEDRAB", "ORANGE", "ORANGERED", "ORCHID", "PALEGOLDENROD", "PALEGREEN", "PALETURQUOISE", "PALEVIOLETRED", "PAPAYAWHIP", "PEACHPUFF", "PERU", "PINK", "PLUM", "POWDERBLUE", "PURPLE", "REBECCAPURPLE", "RED", "ROSYBROWN", "ROYALBLUE", "SADDLEBROWN", "SALMON", "SANDYBROWN", "SEAGREEN", "SEASHELL", "SIENNA", "SILVER", "SKYBLUE", "SLATEBLUE", "SLATEGRAY", "SLATEGREY", "SNOW", "SPRINGGREEN", "STEELBLUE", "TAN", "TEAL", "THISTLE", "TOMATO", "TURQUOISE", "VIOLET", "WHEAT", "WHITE", "WHITESMOKE", "YELLOW", "YELLOWGREEN");
 
     // Constant global values
-    const MESH: ƒ.MeshQuad = new ƒ.MeshQuad("QuadMesh");
+    const TEXTURE_PATH: string = "assets/";
+    const QUAD_MESH: ƒ.MeshQuad = new ƒ.MeshQuad("QuadMesh");
+    const SPRITE_MESH: ƒ.Mesh = new ƒ.MeshSprite("SpriteMesh");
     const MATERIAL: ƒ.Material = new ƒ.Material(
         "WhiteMaterial",
         ƒ.ShaderUniColor,
         new ƒ.CoatColored(ƒ.Color.CSS("WHITE"))
     );
+    const INVADER_MATERIAL: ƒ.Material = new ƒ.Material(
+        "InvaderMaterial",
+        ƒ.ShaderTexture,
+        new ƒ.CoatTextured()
+    );
     const SCREEN_WIDTH: number = 224;
     const SCREEN_HIGHT: number = 239;
 
-    
+
+    abstract class Invader extends GameObject {
+        protected readonly facade: ƒ.Node = new ƒ.Node("InvaderFacade");
+        protected readonly scale: ƒ.Vector3 = ƒ.Vector3.ONE();
+
+
+        public constructor(_name: string, _position: ƒ.Vector3, _scale: ƒ.Vector3, _coatTexture: ƒ.CoatTextured) {
+            // Since we don't want the Invader node to scale, we don't provide a value in the constructor
+            super(_name, _position, QUAD_MESH, new ƒ.Material("InvaderMaterial", ƒ.ShaderTexture, _coatTexture), _scale);
+            // But we do want to define the scale variable to scale the texture and hit box
+            this.scale = _scale;
+ 
+            INVADER_MATERIAL.setCoat(_coatTexture);
+            this.applyMaterial(SPRITE_MESH, INVADER_MATERIAL);
+        }
+    }
+
+    class Squid extends Invader {
+        private static readonly Texture: ƒ.Texture = new ƒ.TextureImage(TEXTURE_PATH + "squid.png");
+        private static readonly Coat: ƒ.CoatTextured = new ƒ.CoatTextured(ƒ.Color.CSS("WHITE"), Squid.Texture);
+
+        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(8, 8, 0);
+
+        constructor(_position: ƒ.Vector3) {
+            super("SquidInvader", _position, Squid.scale, Squid.Coat);
+        }
+    }
+
+    class Crab extends Invader {
+        private static readonly Texture: ƒ.Texture = new ƒ.TextureImage(TEXTURE_PATH + "crab.png");
+        private static readonly Coat: ƒ.CoatTextured = new ƒ.CoatTextured(ƒ.Color.CSS("WHITE"), Crab.Texture);
+
+        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(11, 8, 0);
+
+        constructor(_position: ƒ.Vector3) {
+            super("CrabInvader", _position, Crab.scale, Crab.Coat);
+        }
+    }
+
+    class Octopus extends Invader {
+        private static readonly Texture: ƒ.Texture = new ƒ.TextureImage(TEXTURE_PATH + "octopus.png");
+        private static readonly Coat: ƒ.CoatTextured = new ƒ.CoatTextured(ƒ.Color.CSS("WHITE"), Octopus.Texture);
+
+        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(12, 8, 0);
+
+        constructor(_position: ƒ.Vector3) {
+            super("OctopusInvader", _position, Octopus.scale, Octopus.Coat);
+        }
+    }
+
+    class UFO extends Invader {
+        private static readonly Texture: ƒ.Texture = new ƒ.TextureImage(TEXTURE_PATH + "ufo.png");
+        private static readonly Coat: ƒ.CoatTextured = new ƒ.CoatTextured(ƒ.Color.CSS("WHITE"), UFO.Texture);
+
+        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(16, 7, 0);
+
+        constructor(_position: ƒ.Vector3) {
+            super("UfoInvader", _position, UFO.scale, UFO.Coat);
+            this.setPrimaryColor(ƒ.Color.CSS("RED"));
+        }
+    }
 
 
     class Shield extends ƒ.Node {
@@ -59,7 +126,7 @@ namespace L02_Space_Invaders_v2 {
                 const slice: GameObject = new GameObject(
                     "Slice" + index,
                     slicePosition,
-                    MESH,
+                    QUAD_MESH,
                     MATERIAL,
                     sliceScale
                 );
@@ -69,11 +136,11 @@ namespace L02_Space_Invaders_v2 {
         }
     }
 
-    export class Projectile extends GameObject {
+    class Projectile extends GameObject {
         private static scale: ƒ.Vector3 = new ƒ.Vector3(1, 4, 0);
 
         constructor(_position: ƒ.Vector3) {
-            super("Projectile", _position, MESH, MATERIAL, Projectile.scale);
+            super("Projectile", _position, QUAD_MESH, MATERIAL, Projectile.scale);
 
         }
     }
@@ -111,10 +178,10 @@ namespace L02_Space_Invaders_v2 {
         const rootUI: ƒ.Node = new ƒ.Node("rootUI");
 
         // Lower line
-        rootUI.addChild(new GameObject("BottomLine", new ƒ.Vector3(0, -20, 0), MESH, MATERIAL, new ƒ.Vector3(SCREEN_WIDTH, 1, 0)));
+        rootUI.addChild(new GameObject("BottomLine", new ƒ.Vector3(0, -20, 0), QUAD_MESH, MATERIAL, new ƒ.Vector3(SCREEN_WIDTH, 1, 0)));
 
         // reference height // y=91, x=0 perfect center of screen
-        rootUI.addChild(new GameObject("HightReference", new ƒ.Vector3(-110, 91, 0), MESH, MATERIAL, new ƒ.Vector3(1, SCREEN_HIGHT, 0)));
+        rootUI.addChild(new GameObject("HightReference", new ƒ.Vector3(-110, 91, 0), QUAD_MESH, MATERIAL, new ƒ.Vector3(1, SCREEN_HIGHT, 0)));
 
         return rootUI;
     }

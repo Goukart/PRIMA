@@ -7,6 +7,7 @@ var L02_Space_Invaders_v2;
             super(_name);
             this.facade = new ƒ.Node("GameObjectFacade");
             this.scale = _scale || ƒ.Vector3.ONE();
+            this.facade.name = _name + "Facade";
             // Add component to move and scale the node
             this.addComponent(new ƒ.ComponentTransform());
             this.applyMaterial(_mesh, _material);
