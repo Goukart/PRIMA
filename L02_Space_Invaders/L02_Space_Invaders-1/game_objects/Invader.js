@@ -12,53 +12,39 @@ var L02_Space_Invaders_v1;
     class Invader extends L02_Space_Invaders_v1.GameObject {
         constructor(_name, _position, _scale, _material) {
             // Since we don't want the Invader node to scale, we don't provide a value in the constructor
-            super(_name, _position, new ƒ.MeshCube("CubeMesh"), _material);
-            this.texture = new ƒ.Node("InvaderTexture");
+            super(_name, _position, new ƒ.MeshQuad("QuadMesh"), _material, _scale);
+            this.facade = new ƒ.Node("InvaderFacade");
             this.scale = ƒ.Vector3.ONE();
             // But we do want to define the scale variable to scale the texture and hit box
             this.scale = _scale;
             const mesh = new ƒ.MeshSprite("SpriteMesh");
             this.applyMaterial(mesh, _material);
         }
-        applyMaterial(_mesh, _material) {
-            // Make texture scalable
-            this.texture.addComponent(new ƒ.ComponentTransform);
-            // Scale texture
-            this.texture.mtxLocal.scale(this.scale);
-            // Attach the mesh as a component to the node
-            this.texture.addComponent(new ƒ.ComponentMesh(_mesh));
-            // Create a component to attach the material via this to the node
-            let cmpMaterial = new ƒ.ComponentMaterial(_material);
-            // Now link the material to the node
-            this.texture.addComponent(cmpMaterial);
-            // Add the material to the node as a separate node
-            this.addChild(this.texture);
-        }
     }
     L02_Space_Invaders_v1.Invader = Invader;
     class Squid extends Invader {
         constructor(_position) {
             super("SquidInvader", _position, Squid.scale, squidMaterial);
-            this.texture = new ƒ.Node("SquidInvaderTexture");
+            this.facade = new ƒ.Node("SquidInvaderTexture");
         }
     }
-    Squid.scale = new ƒ.Vector3(8, 8, 1);
+    Squid.scale = new ƒ.Vector3(8, 8, 0);
     L02_Space_Invaders_v1.Squid = Squid;
     class Crab extends Invader {
         constructor(_position) {
             super("CrabInvader", _position, Crab.scale, crabMaterial);
-            this.texture = new ƒ.Node("CrabInvaderTexture");
+            this.facade = new ƒ.Node("CrabInvaderTexture");
         }
     }
-    Crab.scale = new ƒ.Vector3(11, 8, 1);
+    Crab.scale = new ƒ.Vector3(11, 8, 0);
     L02_Space_Invaders_v1.Crab = Crab;
     class Octopus extends Invader {
         constructor(_position) {
             super("OctopusInvader", _position, Octopus.scale, octopusMaterial);
-            this.texture = new ƒ.Node("SquidInvaderTexture");
+            this.facade = new ƒ.Node("SquidInvaderTexture");
         }
     }
-    Octopus.scale = new ƒ.Vector3(12, 8, 1);
+    Octopus.scale = new ƒ.Vector3(12, 8, 0);
     L02_Space_Invaders_v1.Octopus = Octopus;
 })(L02_Space_Invaders_v1 || (L02_Space_Invaders_v1 = {}));
 //# sourceMappingURL=Invader.js.map

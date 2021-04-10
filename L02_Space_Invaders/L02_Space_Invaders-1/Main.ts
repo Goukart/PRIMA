@@ -97,9 +97,9 @@ namespace L02_Space_Invaders_v1 {
             canvas      // Where to render to, here the html canvas so the user can see it
         );
 
-
+        const spaceCannon: Cannon = Cannon.Instance;
         // Build the Level
-        buildLevel(root, cmpCamera, Cannon.getInstance());
+        buildLevel(root, cmpCamera, spaceCannon);
 
         // Start the game loop in real time mode at 60 fps
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);

@@ -34,34 +34,17 @@ namespace L02_Space_Invaders_v1 {
 
         public constructor(_name: string, _position: ƒ.Vector3, _scale: ƒ.Vector3, _material: ƒ.Material) {
             // Since we don't want the Invader node to scale, we don't provide a value in the constructor
-            super(_name, _position, new ƒ.MeshCube("CubeMesh"), _material);
+            super(_name, _position, new ƒ.MeshQuad("QuadMesh"), _material, _scale);
             // But we do want to define the scale variable to scale the texture and hit box
             this.scale = _scale;
 
             const mesh: ƒ.Mesh = new ƒ.MeshSprite("SpriteMesh");
             this.applyMaterial(mesh, _material);
         }
-
-        protected applyMaterial(_mesh: ƒ.Mesh, _material: ƒ.Material): void {
-            // Make texture scalable
-            this.facade.addComponent(new ƒ.ComponentTransform);
-            // Scale texture
-            this.facade.mtxLocal.scale(this.scale);
-
-            // Attach the mesh as a component to the node
-            this.facade.addComponent(new ƒ.ComponentMesh(_mesh));
-            // Create a component to attach the material via this to the node
-            let cmpMaterial: ƒ.ComponentMaterial = new ƒ.ComponentMaterial(_material);
-            // Now link the material to the node
-            this.facade.addComponent(cmpMaterial);
-
-            // Add the material to the node as a separate node
-            this.addChild(this.facade);
-        }
     }
 
     export class Squid extends Invader {
-        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(8, 8, 1);
+        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(8, 8, 0);
         protected readonly facade: ƒ.Node = new ƒ.Node("SquidInvaderTexture");
 
 
@@ -71,7 +54,7 @@ namespace L02_Space_Invaders_v1 {
     }
 
     export class Crab extends Invader {
-        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(11, 8, 1);
+        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(11, 8, 0);
         protected readonly facade: ƒ.Node = new ƒ.Node("CrabInvaderTexture");
 
 
@@ -81,7 +64,7 @@ namespace L02_Space_Invaders_v1 {
     }
 
     export class Octopus extends Invader {
-        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(12, 8, 1);
+        protected static readonly scale: ƒ.Vector3 = new ƒ.Vector3(12, 8, 0);
         protected readonly facade: ƒ.Node = new ƒ.Node("SquidInvaderTexture");
 
 

@@ -78,8 +78,9 @@ var L02_Space_Invaders_v1;
         cmpCamera, // From which perspective/camera to view the scene from (usually the root-node)
         canvas // Where to render to, here the html canvas so the user can see it
         );
+        const spaceCannon = L02_Space_Invaders_v1.Cannon.Instance;
         // Build the Level
-        L02_Space_Invaders_v1.buildLevel(root, cmpCamera, L02_Space_Invaders_v1.Cannon.getInstance());
+        L02_Space_Invaders_v1.buildLevel(root, cmpCamera, spaceCannon);
         // Start the game loop in real time mode at 60 fps
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
         // To couple our game to the engine with the 'update' function. 'update' gets called every frame

@@ -18,22 +18,15 @@ namespace L02_Space_Invaders_v1 {
 
             this.applyMaterial(_mesh, _material);
 
-            //this.mtxLocal.scale(this.scale); // not needed, because this must stay 1, separate node for appearance
-
-            /* This also becomes obsolete with new facade node
-            // Conversion from relative translation to absolute
-            const absTranslation: ƒ.Vector3 = new ƒ.Vector3(
-                _position.x * (this.scale.x == 0 ? 0 : 1 / this.scale.x),
-                _position.y * (this.scale.y == 0 ? 0 : 1 / this.scale.y),
-                _position.z * (this.scale.z == 0 ? 0 : 1 / this.scale.z)
-            );
-
-            this.mtxLocal.translate(absTranslation);
-            */
             this.mtxLocal.translate(_position);
         }
 
         protected applyMaterial(_mesh: ƒ.Mesh, _material: ƒ.Material): void {
+            // Make facade scalable, independent of parent size
+            this.facade.addComponent(new ƒ.ComponentTransform);
+            // Scale facade
+            this.facade.mtxLocal.scale(this.scale);
+
             // Define a default mesh, in this case a Quad
             let defaultMesh: ƒ.Mesh = new ƒ.MeshQuad("QuadMesh");
 
@@ -64,6 +57,5 @@ namespace L02_Space_Invaders_v1 {
         public translate(): void {
 
         }
-
     }
 }

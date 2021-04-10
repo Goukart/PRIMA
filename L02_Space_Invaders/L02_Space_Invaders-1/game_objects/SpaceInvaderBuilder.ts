@@ -4,6 +4,7 @@ namespace L02_Space_Invaders_v1 {
     const colors: Array<string> = new Array<string>("ALICEBLUE", "ANTIQUEWHITE", "AQUA", "AQUAMARINE", "AZURE", "BEIGE", "BISQUE", /*"BLACK",*/ "BLANCHEDALMOND", "BLUE", "BLUEVIOLET", "BROWN", "BURLYWOOD", "CADETBLUE", "CHARTREUSE", "CHOCOLATE", "CORAL", "CORNFLOWERBLUE", "CORNSILK", "CRIMSON", "CYAN", "DARKBLUE", "DARKCYAN", "DARKGOLDENROD", "DARKGRAY", "DARKGREY", "DARKGREEN", "DARKKHAKI", "DARKMAGENTA", "DARKOLIVEGREEN", "DARKORANGE", "DARKORCHID", "DARKRED", "DARKSALMON", "DARKSEAGREEN", "DARKSLATEBLUE", "DARKSLATEGRAY", "DARKSLATEGREY", "DARKTURQUOISE", "DARKVIOLET", "DEEPPINK", "DEEPSKYBLUE", "DIMGRAY", "DIMGREY", "DODGERBLUE", "FIREBRICK", "FLORALWHITE", "FORESTGREEN", "FUCHSIA", "GAINSBORO", "GHOSTWHITE", "GOLD", "GOLDENROD", "GRAY", "GREY", "GREEN", "GREENYELLOW", "HONEYDEW", "HOTPINK", "INDIANRED", "INDIGO", "IVORY", "KHAKI", "LAVENDER", "LAVENDERBLUSH", "LAWNGREEN", "LEMONCHIFFON", "LIGHTBLUE", "LIGHTCORAL", "LIGHTCYAN", "LIGHTGOLDENRODYELLOW", "LIGHTGRAY", "LIGHTGREY", "LIGHTGREEN", "LIGHTPINK", "LIGHTSALMON", "LIGHTSEAGREEN", "LIGHTSKYBLUE", "LIGHTSLATEGRAY", "LIGHTSLATEGREY", "LIGHTSTEELBLUE", "LIGHTYELLOW", "LIME", "LIMEGREEN", "LINEN", "MAGENTA", "MAROON", "MEDIUMAQUAMARINE", "MEDIUMBLUE", "MEDIUMORCHID", "MEDIUMPURPLE", "MEDIUMSEAGREEN", "MEDIUMSLATEBLUE", "MEDIUMSPRINGGREEN", "MEDIUMTURQUOISE", "MEDIUMVIOLETRED", "MIDNIGHTBLUE", "MINTCREAM", "MISTYROSE", "MOCCASIN", "NAVAJOWHITE", "NAVY", "OLDLACE", "OLIVE", "OLIVEDRAB", "ORANGE", "ORANGERED", "ORCHID", "PALEGOLDENROD", "PALEGREEN", "PALETURQUOISE", "PALEVIOLETRED", "PAPAYAWHIP", "PEACHPUFF", "PERU", "PINK", "PLUM", "POWDERBLUE", "PURPLE", "REBECCAPURPLE", "RED", "ROSYBROWN", "ROYALBLUE", "SADDLEBROWN", "SALMON", "SANDYBROWN", "SEAGREEN", "SEASHELL", "SIENNA", "SILVER", "SKYBLUE", "SLATEBLUE", "SLATEGRAY", "SLATEGREY", "SNOW", "SPRINGGREEN", "STEELBLUE", "TAN", "TEAL", "THISTLE", "TOMATO", "TURQUOISE", "VIOLET", "WHEAT", "WHITE", "WHITESMOKE", "YELLOW", "YELLOWGREEN");
 
 
+
     class Shield extends ƒ.Node {
         private readonly material: ƒ.Material = new ƒ.Material(
             "ShieldMaterial",
@@ -18,7 +19,7 @@ namespace L02_Space_Invaders_v1 {
 
 
         private readonly verticalCentering: number = -2;
-        private readonly horizontalCentering: number = - (this.width / 2) + 0.5;
+        private readonly horizontalCentering: number = - center(this.width);
         private readonly sliceHeights: number[] = [
             12, 13, 14, 15, 16, 14, 13,
             12, 12, 12, 12, 12, 12, 12,
@@ -42,8 +43,7 @@ namespace L02_Space_Invaders_v1 {
                 const testMat: ƒ.Material = new ƒ.Material(
                     "ShieldTestMaterial",
                     ƒ.ShaderUniColor,
-                    new ƒ.CoatColored(ƒ.Color.CSS(colors[8 +
-                        index % 2]))
+                    new ƒ.CoatColored(ƒ.Color.CSS(colors[8 + index % 2]))
                 );
 
                 const slicePosition: ƒ.Vector3 = new ƒ.Vector3(
@@ -66,6 +66,7 @@ namespace L02_Space_Invaders_v1 {
                 );
 
 
+
                 // Conversion from relative translation to absolute
                 const absTranslation: ƒ.Vector3 = new ƒ.Vector3(
                     _position.x * (1 / this.width),
@@ -73,6 +74,8 @@ namespace L02_Space_Invaders_v1 {
                     _position.z
                 );
                 this.mtxLocal.translate(absTranslation);
+
+                //this.mtxLocal.translate(_position);
 
                 this.addChild(slice);
             }
@@ -114,16 +117,17 @@ namespace L02_Space_Invaders_v1 {
         console.log(sh);
         */
 
+        // The entire screen is 224 wide and 239 high
+
 
         _scene.addChild(createInvaders());
 
         _scene.addChild(createShields());
 
-        for (let index = 0; index < 4; index++) {
-            _scene.addChild(new Projectile(new ƒ.Vector3(index, index + 8, 0)));
-        }
-        
-        _scene.addChild(Cannon.getInstance())
+        _scene.addChild(_cannon.Node);
+
+        _scene.addChild(new Projectile(new ƒ.Vector3(0, 22, 0)));
+        _scene.addChild(new Projectile(new ƒ.Vector3(30, 35, 0)));
 
     }
 
@@ -178,7 +182,7 @@ namespace L02_Space_Invaders_v1 {
         const numberOfSpaces: number = numberOfShields - 1;
         const spaceX: number = shield.width + 19;
         const offsetX: number = - ((numberOfSpaces / 2) * spaceX);
-        const offsetY: number = 10;
+        const offsetY: number = 19.5;
 
 
         for (let index = 0; index < numberOfShields; index++) {
@@ -194,8 +198,37 @@ namespace L02_Space_Invaders_v1 {
             );
             shields.addChild(shield);
         }
-        console.log(shields);
 
         return shields;
+    }
+
+    function center(_value: number) {
+        // To find the offset you need to center something, you need to divide by the number of
+        // objects besides the first one:
+        /**  ____  ____  ____  ____  ____ 
+         *  | 1  || 2  || 3  || 4  || 5  |
+         *  |____||____||____||____||____|
+         *    |<-1->|<-2->|<-3->|<-4->|
+         *    |           |
+         *    |<--offset->|<-The center of the row is here = (n-1) / 2
+         *    |
+         *  This is the origin, so x = 0 is in the center of the first object
+         * 
+         * Because the origin is in the center of the first object, there are only n-1 objects,
+         * that need to be offset, so the middle object aligns with x=0.
+         * 
+         * 
+         *   ____  ____  ____  ____  ____ 
+         *  | 1  || 2  || 3  || 4  || 5  |
+         *  |____||____||____||____||____|
+         *  |<-1->|<-2->|<-3->|<-4->|<-5->|
+         *  |              |
+         *  |<---offset--->|<-The center of the row is here = n / 2
+         *  |
+         *  If the origin where  here so the very left side of an object, there is no extra
+         *  offset, just to align the middle object with x=0, because n/2 is already the center
+         *  of the middle object.
+         */
+        return (_value - 1) / 2;
     }
 }

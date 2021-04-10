@@ -2,29 +2,77 @@ namespace L02_Space_Invaders_v1 {
     import ƒ = FudgeCore;
 
 
+    export class Cannon {
+        private static instance: Cannon;
+        private static readonly rootNode: ƒ.Node = new ƒ.Node("SpaceCannon");
 
-
-    export class Cannon extends GameObject {
-        private static readonly instance: Cannon = new Cannon();
-
-        private static readonly mesh: ƒ.MeshQuad = new ƒ.MeshQuad("QuadMesh");
+        private static readonly mesh: ƒ.Mesh = new ƒ.MeshQuad("QuadMesh");
         private static readonly material: ƒ.Material = new ƒ.Material(
             "CannonMaterial",
             ƒ.ShaderUniColor,
             new ƒ.CoatColored(ƒ.Color.CSS("GREEN"))
         );
-        private static scale: ƒ.Vector3 = new ƒ.Vector3(13, 7, 0);
+
+
+        private readonly facade: ƒ.Node = new ƒ.Node("CannonFacade");
 
 
         private constructor() {
-            super("SpaceCannon", ƒ.Vector3.ZERO(), Cannon.mesh, Cannon.material);
+            Cannon.rootNode.addComponent(new ƒ.ComponentTransform());
+            const width: number = 13;
+            const height: number = 8;
+
+            let position: ƒ.Vector3 = new ƒ.Vector3();
+            let scale: ƒ.Vector3 = new ƒ.Vector3();
+
+            let part: GameObject;
+            const partsWidth: number[] = [width, (width - 2), 3, 1];
+            const partsHeight: number[] = [4, 1, 2, 1];
+            let offsetY: number = 0;
+            for (let index = 0; index < partsWidth.length; index++) {
+                position = new ƒ.Vector3(
+                    0,
+                    // Vertical offset is (height-1)/2, but parts are not 1 high, so its:
+                    // (height-1)/2 + partsHeight[0]/2 = (8-1)/2 + (4/2) = 1,5
+                    offsetY - 1.5,
+                    0
+                );
+                offsetY += partsHeight[index] / 2 + 0.5; // 0,5 on top for own height
+                scale = new ƒ.Vector3(
+                    partsWidth[index],
+                    partsHeight[index],
+                    0
+                );
+
+
+                part = new GameObject(
+                    "Part_" + index,
+                    position,
+                    Cannon.mesh,
+                    Cannon.material,
+                    scale
+                );
+
+                this.facade.addChild(part);
+            }
+            Cannon.rootNode.addChild(this.facade);
             
-
-
+   
+            const testMat: ƒ.Material = new ƒ.Material(
+                "CannonMaterial",
+                ƒ.ShaderUniColor,
+                new ƒ.CoatColored(ƒ.Color.CSS("White"))
+            );
+            Cannon.rootNode.addChild(new GameObject("", new ƒ.Vector3(0, 0, 0), new ƒ.MeshCube("CubeMesh"), testMat, new ƒ.Vector3(width, 1, 1)));
+            Cannon.rootNode.addChild(new GameObject("", new ƒ.Vector3(0, 0, 0), new ƒ.MeshCube("CubeMesh"), testMat, new ƒ.Vector3(1, height, 1)));
         }
 
-        public static getInstance(): Cannon {
-            return this.instance;
+        public static get Instance(): Cannon {
+            return Cannon.instance || (Cannon.instance = new this());
+        }
+
+        public get Node(): ƒ.Node {
+            return Cannon.rootNode;
         }
     }
 }

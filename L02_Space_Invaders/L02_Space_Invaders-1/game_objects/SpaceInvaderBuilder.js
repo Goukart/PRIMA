@@ -12,7 +12,7 @@ var L02_Space_Invaders_v1;
             // Total height
             this.height = 16;
             this.verticalCentering = -2;
-            this.horizontalCentering = -(this.width / 2) + 0.5;
+            this.horizontalCentering = -center(this.width);
             this.sliceHeights = [
                 12, 13, 14, 15, 16, 14, 13,
                 12, 12, 12, 12, 12, 12, 12,
@@ -25,14 +25,14 @@ var L02_Space_Invaders_v1;
             ];
             this.addComponent(new ƒ.ComponentTransform);
             for (let index = 0; index < this.width; index++) {
-                const testMat = new ƒ.Material("ShieldTestMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS(colors[8 +
-                    index % 2])));
+                const testMat = new ƒ.Material("ShieldTestMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS(colors[8 + index % 2])));
                 const slicePosition = new ƒ.Vector3(index + this.horizontalCentering, this.sliceOffsetY[index] + this.verticalCentering, 0);
                 const sliceScale = new ƒ.Vector3(1, this.sliceHeights[index], 0);
                 const slice = new L02_Space_Invaders_v1.GameObject("Slice" + index, slicePosition, new ƒ.MeshCube("CubeMesh"), testMat, sliceScale);
                 // Conversion from relative translation to absolute
                 const absTranslation = new ƒ.Vector3(_position.x * (1 / this.width), _position.y * (1 / this.height), _position.z);
                 this.mtxLocal.translate(absTranslation);
+                //this.mtxLocal.translate(_position);
                 this.addChild(slice);
             }
             this.addChild(new L02_Space_Invaders_v1.GameObject("", new ƒ.Vector3(0, 0, 0), new ƒ.MeshCube("CubeMesh"), this.material, new ƒ.Vector3(this.width, 1, 1)));
@@ -62,12 +62,12 @@ var L02_Space_Invaders_v1;
         _scene.addChild(sh);
         console.log(sh);
         */
+        // The entire screen is 224 wide and 239 high
         _scene.addChild(createInvaders());
         _scene.addChild(createShields());
-        for (let index = 0; index < 4; index++) {
-            _scene.addChild(new Projectile(new ƒ.Vector3(index, index + 8, 0)));
-        }
-        _scene.addChild(L02_Space_Invaders_v1.Cannon.getInstance());
+        _scene.addChild(_cannon.Node);
+        _scene.addChild(new Projectile(new ƒ.Vector3(0, 22, 0)));
+        _scene.addChild(new Projectile(new ƒ.Vector3(30, 35, 0)));
     }
     L02_Space_Invaders_v1.buildLevel = buildLevel;
     function createInvaders() {
@@ -112,14 +112,42 @@ var L02_Space_Invaders_v1;
         const numberOfSpaces = numberOfShields - 1;
         const spaceX = shield.width + 19;
         const offsetX = -((numberOfSpaces / 2) * spaceX);
-        const offsetY = 10;
+        const offsetY = 19.5;
         for (let index = 0; index < numberOfShields; index++) {
             const position = new ƒ.Vector3(index * spaceX + offsetX, offsetY, 0);
             shield = new Shield("Shield_" + index, position);
             shields.addChild(shield);
         }
-        console.log(shields);
         return shields;
+    }
+    function center(_value) {
+        // To find the offset you need to center something, you need to divide by the number of
+        // objects besides the first one:
+        /**  ____  ____  ____  ____  ____
+         *  | 1  || 2  || 3  || 4  || 5  |
+         *  |____||____||____||____||____|
+         *    |<-1->|<-2->|<-3->|<-4->|
+         *    |           |
+         *    |<--offset->|<-The center of the row is here = (n-1) / 2
+         *    |
+         *  This is the origin, so x = 0 is in the center of the first object
+         *
+         * Because the origin is in the center of the first object, there are only n-1 objects,
+         * that need to be offset, so the middle object aligns with x=0.
+         *
+         *
+         *   ____  ____  ____  ____  ____
+         *  | 1  || 2  || 3  || 4  || 5  |
+         *  |____||____||____||____||____|
+         *  |<-1->|<-2->|<-3->|<-4->|<-5->|
+         *  |              |
+         *  |<---offset--->|<-The center of the row is here = n / 2
+         *  |
+         *  If the origin where  here so the very left side of an object, there is no extra
+         *  offset, just to align the middle object with x=0, because n/2 is already the center
+         *  of the middle object.
+         */
+        return (_value - 1) / 2;
     }
 })(L02_Space_Invaders_v1 || (L02_Space_Invaders_v1 = {}));
 //# sourceMappingURL=SpaceInvaderBuilder.js.map
