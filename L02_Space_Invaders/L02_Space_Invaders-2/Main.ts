@@ -71,15 +71,10 @@ namespace L02_Space_Invaders_v2 {
         let height: number = 2 * Math.abs(distance) * Math.tan(fov * 0.5 * deg2Rad);
         let width: number = height * _cmpCamera.getAspect();
 
-        /**
-         *         const deg2Rad: number = Math.PI / 180;
-        const distance = 310;
-
-        const fov: number = _cmpCamera.getFieldOfView();
-
+        /*
         let height: number = 2 * Math.abs(distance) * Math.tan(fov * 0.595 * deg2Rad);
-        //let length: number = height * (_canvas.height / _canvas.width);
-         */
+        let length: number = height * (_canvas.height / _canvas.width);
+        */
 
         _cmpCamera.mtxPivot.translateZ(distance);
         _cmpCamera.mtxPivot.translateY(90);

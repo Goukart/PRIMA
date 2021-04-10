@@ -3,27 +3,21 @@ namespace L02_Space_Invaders_v2 {
 
     //const colors: Array<string> = new Array<string>("ALICEBLUE", "ANTIQUEWHITE", "AQUA", "AQUAMARINE", "AZURE", "BEIGE", "BISQUE", /*"BLACK",*/ "BLANCHEDALMOND", "BLUE", "BLUEVIOLET", "BROWN", "BURLYWOOD", "CADETBLUE", "CHARTREUSE", "CHOCOLATE", "CORAL", "CORNFLOWERBLUE", "CORNSILK", "CRIMSON", "CYAN", "DARKBLUE", "DARKCYAN", "DARKGOLDENROD", "DARKGRAY", "DARKGREY", "DARKGREEN", "DARKKHAKI", "DARKMAGENTA", "DARKOLIVEGREEN", "DARKORANGE", "DARKORCHID", "DARKRED", "DARKSALMON", "DARKSEAGREEN", "DARKSLATEBLUE", "DARKSLATEGRAY", "DARKSLATEGREY", "DARKTURQUOISE", "DARKVIOLET", "DEEPPINK", "DEEPSKYBLUE", "DIMGRAY", "DIMGREY", "DODGERBLUE", "FIREBRICK", "FLORALWHITE", "FORESTGREEN", "FUCHSIA", "GAINSBORO", "GHOSTWHITE", "GOLD", "GOLDENROD", "GRAY", "GREY", "GREEN", "GREENYELLOW", "HONEYDEW", "HOTPINK", "INDIANRED", "INDIGO", "IVORY", "KHAKI", "LAVENDER", "LAVENDERBLUSH", "LAWNGREEN", "LEMONCHIFFON", "LIGHTBLUE", "LIGHTCORAL", "LIGHTCYAN", "LIGHTGOLDENRODYELLOW", "LIGHTGRAY", "LIGHTGREY", "LIGHTGREEN", "LIGHTPINK", "LIGHTSALMON", "LIGHTSEAGREEN", "LIGHTSKYBLUE", "LIGHTSLATEGRAY", "LIGHTSLATEGREY", "LIGHTSTEELBLUE", "LIGHTYELLOW", "LIME", "LIMEGREEN", "LINEN", "MAGENTA", "MAROON", "MEDIUMAQUAMARINE", "MEDIUMBLUE", "MEDIUMORCHID", "MEDIUMPURPLE", "MEDIUMSEAGREEN", "MEDIUMSLATEBLUE", "MEDIUMSPRINGGREEN", "MEDIUMTURQUOISE", "MEDIUMVIOLETRED", "MIDNIGHTBLUE", "MINTCREAM", "MISTYROSE", "MOCCASIN", "NAVAJOWHITE", "NAVY", "OLDLACE", "OLIVE", "OLIVEDRAB", "ORANGE", "ORANGERED", "ORCHID", "PALEGOLDENROD", "PALEGREEN", "PALETURQUOISE", "PALEVIOLETRED", "PAPAYAWHIP", "PEACHPUFF", "PERU", "PINK", "PLUM", "POWDERBLUE", "PURPLE", "REBECCAPURPLE", "RED", "ROSYBROWN", "ROYALBLUE", "SADDLEBROWN", "SALMON", "SANDYBROWN", "SEAGREEN", "SEASHELL", "SIENNA", "SILVER", "SKYBLUE", "SLATEBLUE", "SLATEGRAY", "SLATEGREY", "SNOW", "SPRINGGREEN", "STEELBLUE", "TAN", "TEAL", "THISTLE", "TOMATO", "TURQUOISE", "VIOLET", "WHEAT", "WHITE", "WHITESMOKE", "YELLOW", "YELLOWGREEN");
 
+    // Constant global values
     const MESH: ƒ.MeshQuad = new ƒ.MeshQuad("QuadMesh");
     const MATERIAL: ƒ.Material = new ƒ.Material(
         "WhiteMaterial",
         ƒ.ShaderUniColor,
         new ƒ.CoatColored(ƒ.Color.CSS("WHITE"))
     );
+    const SCREEN_WIDTH: number = 224;
+    const SCREEN_HIGHT: number = 239;
 
-    // Constant Values
-    const screenWidth: number = 224;
-    const screenHight: number = 239;
+    
 
 
     class Shield extends ƒ.Node {
-        private readonly material: ƒ.Material = new ƒ.Material(
-            "ShieldMaterial",
-            ƒ.ShaderUniColor,
-            new ƒ.CoatColored(new ƒ.Color(0, 1, 0, 1))
-        );
-
-        // also number of slices
-        public readonly totalWidth: number = 21;
+        public readonly totalWidth: number = 21; // also number of slices
         public readonly totalHeight: number = 16;
 
 
@@ -66,24 +60,20 @@ namespace L02_Space_Invaders_v2 {
                     "Slice" + index,
                     slicePosition,
                     MESH,
-                    this.material,
+                    MATERIAL,
                     sliceScale
                 );
+                slice.setPrimaryColor(ƒ.Color.CSS("LIME"));
                 this.addChild(slice);
             }
         }
     }
 
     export class Projectile extends GameObject {
-        private static readonly material: ƒ.Material = new ƒ.Material(
-            "ProjectileMaterial",
-            ƒ.ShaderUniColor,
-            new ƒ.CoatColored(ƒ.Color.CSS("WHITE"))
-        );
         private static scale: ƒ.Vector3 = new ƒ.Vector3(1, 4, 0);
 
         constructor(_position: ƒ.Vector3) {
-            super("Projectile", _position, MESH, Projectile.material, Projectile.scale);
+            super("Projectile", _position, MESH, MATERIAL, Projectile.scale);
 
         }
     }
@@ -121,10 +111,10 @@ namespace L02_Space_Invaders_v2 {
         const rootUI: ƒ.Node = new ƒ.Node("rootUI");
 
         // Lower line
-        rootUI.addChild(new GameObject("BottomLine", new ƒ.Vector3(0, -20, 0), MESH, MATERIAL, new ƒ.Vector3(screenWidth, 1, 0)));
+        rootUI.addChild(new GameObject("BottomLine", new ƒ.Vector3(0, -20, 0), MESH, MATERIAL, new ƒ.Vector3(SCREEN_WIDTH, 1, 0)));
 
         // reference height // y=91, x=0 perfect center of screen
-        rootUI.addChild(new GameObject("HightReference", new ƒ.Vector3(-110, 91, 0), MESH, MATERIAL, new ƒ.Vector3(1, screenHight, 0)));
+        rootUI.addChild(new GameObject("HightReference", new ƒ.Vector3(-110, 91, 0), MESH, MATERIAL, new ƒ.Vector3(1, SCREEN_HIGHT, 0)));
 
         return rootUI;
     }

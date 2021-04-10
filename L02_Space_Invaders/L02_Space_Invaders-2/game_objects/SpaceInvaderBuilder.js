@@ -3,17 +3,15 @@ var L02_Space_Invaders_v2;
 (function (L02_Space_Invaders_v2) {
     var ƒ = FudgeCore;
     //const colors: Array<string> = new Array<string>("ALICEBLUE", "ANTIQUEWHITE", "AQUA", "AQUAMARINE", "AZURE", "BEIGE", "BISQUE", /*"BLACK",*/ "BLANCHEDALMOND", "BLUE", "BLUEVIOLET", "BROWN", "BURLYWOOD", "CADETBLUE", "CHARTREUSE", "CHOCOLATE", "CORAL", "CORNFLOWERBLUE", "CORNSILK", "CRIMSON", "CYAN", "DARKBLUE", "DARKCYAN", "DARKGOLDENROD", "DARKGRAY", "DARKGREY", "DARKGREEN", "DARKKHAKI", "DARKMAGENTA", "DARKOLIVEGREEN", "DARKORANGE", "DARKORCHID", "DARKRED", "DARKSALMON", "DARKSEAGREEN", "DARKSLATEBLUE", "DARKSLATEGRAY", "DARKSLATEGREY", "DARKTURQUOISE", "DARKVIOLET", "DEEPPINK", "DEEPSKYBLUE", "DIMGRAY", "DIMGREY", "DODGERBLUE", "FIREBRICK", "FLORALWHITE", "FORESTGREEN", "FUCHSIA", "GAINSBORO", "GHOSTWHITE", "GOLD", "GOLDENROD", "GRAY", "GREY", "GREEN", "GREENYELLOW", "HONEYDEW", "HOTPINK", "INDIANRED", "INDIGO", "IVORY", "KHAKI", "LAVENDER", "LAVENDERBLUSH", "LAWNGREEN", "LEMONCHIFFON", "LIGHTBLUE", "LIGHTCORAL", "LIGHTCYAN", "LIGHTGOLDENRODYELLOW", "LIGHTGRAY", "LIGHTGREY", "LIGHTGREEN", "LIGHTPINK", "LIGHTSALMON", "LIGHTSEAGREEN", "LIGHTSKYBLUE", "LIGHTSLATEGRAY", "LIGHTSLATEGREY", "LIGHTSTEELBLUE", "LIGHTYELLOW", "LIME", "LIMEGREEN", "LINEN", "MAGENTA", "MAROON", "MEDIUMAQUAMARINE", "MEDIUMBLUE", "MEDIUMORCHID", "MEDIUMPURPLE", "MEDIUMSEAGREEN", "MEDIUMSLATEBLUE", "MEDIUMSPRINGGREEN", "MEDIUMTURQUOISE", "MEDIUMVIOLETRED", "MIDNIGHTBLUE", "MINTCREAM", "MISTYROSE", "MOCCASIN", "NAVAJOWHITE", "NAVY", "OLDLACE", "OLIVE", "OLIVEDRAB", "ORANGE", "ORANGERED", "ORCHID", "PALEGOLDENROD", "PALEGREEN", "PALETURQUOISE", "PALEVIOLETRED", "PAPAYAWHIP", "PEACHPUFF", "PERU", "PINK", "PLUM", "POWDERBLUE", "PURPLE", "REBECCAPURPLE", "RED", "ROSYBROWN", "ROYALBLUE", "SADDLEBROWN", "SALMON", "SANDYBROWN", "SEAGREEN", "SEASHELL", "SIENNA", "SILVER", "SKYBLUE", "SLATEBLUE", "SLATEGRAY", "SLATEGREY", "SNOW", "SPRINGGREEN", "STEELBLUE", "TAN", "TEAL", "THISTLE", "TOMATO", "TURQUOISE", "VIOLET", "WHEAT", "WHITE", "WHITESMOKE", "YELLOW", "YELLOWGREEN");
+    // Constant global values
     const MESH = new ƒ.MeshQuad("QuadMesh");
     const MATERIAL = new ƒ.Material("WhiteMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("WHITE")));
-    // Constant Values
-    const screenWidth = 224;
-    const screenHight = 239;
+    const SCREEN_WIDTH = 224;
+    const SCREEN_HIGHT = 239;
     class Shield extends ƒ.Node {
         constructor(_name, _position) {
             super("Shield");
-            this.material = new ƒ.Material("ShieldMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(0, 1, 0, 1)));
-            // also number of slices
-            this.totalWidth = 21;
+            this.totalWidth = 21; // also number of slices
             this.totalHeight = 16;
             this.verticalCentering = -2;
             this.horizontalCentering = -center(this.totalWidth);
@@ -32,17 +30,17 @@ var L02_Space_Invaders_v2;
             for (let index = 0; index < this.totalWidth; index++) {
                 const slicePosition = new ƒ.Vector3(index + this.horizontalCentering, this.sliceOffsetY[index] + this.verticalCentering, 0);
                 const sliceScale = new ƒ.Vector3(1, this.sliceHeights[index], 0);
-                const slice = new L02_Space_Invaders_v2.GameObject("Slice" + index, slicePosition, MESH, this.material, sliceScale);
+                const slice = new L02_Space_Invaders_v2.GameObject("Slice" + index, slicePosition, MESH, MATERIAL, sliceScale);
+                slice.setPrimaryColor(ƒ.Color.CSS("LIME"));
                 this.addChild(slice);
             }
         }
     }
     class Projectile extends L02_Space_Invaders_v2.GameObject {
         constructor(_position) {
-            super("Projectile", _position, MESH, Projectile.material, Projectile.scale);
+            super("Projectile", _position, MESH, MATERIAL, Projectile.scale);
         }
     }
-    Projectile.material = new ƒ.Material("ProjectileMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("WHITE")));
     Projectile.scale = new ƒ.Vector3(1, 4, 0);
     L02_Space_Invaders_v2.Projectile = Projectile;
     function buildLevel(_scene, _cmpCamera, _cannon) {
@@ -70,9 +68,9 @@ var L02_Space_Invaders_v2;
     function createUI() {
         const rootUI = new ƒ.Node("rootUI");
         // Lower line
-        rootUI.addChild(new L02_Space_Invaders_v2.GameObject("BottomLine", new ƒ.Vector3(0, -20, 0), MESH, MATERIAL, new ƒ.Vector3(screenWidth, 1, 0)));
+        rootUI.addChild(new L02_Space_Invaders_v2.GameObject("BottomLine", new ƒ.Vector3(0, -20, 0), MESH, MATERIAL, new ƒ.Vector3(SCREEN_WIDTH, 1, 0)));
         // reference height // y=91, x=0 perfect center of screen
-        rootUI.addChild(new L02_Space_Invaders_v2.GameObject("HightReference", new ƒ.Vector3(-110, 91, 0), MESH, MATERIAL, new ƒ.Vector3(1, screenHight, 0)));
+        rootUI.addChild(new L02_Space_Invaders_v2.GameObject("HightReference", new ƒ.Vector3(-110, 91, 0), MESH, MATERIAL, new ƒ.Vector3(1, SCREEN_HIGHT, 0)));
         return rootUI;
     }
     function createInvaders() {
