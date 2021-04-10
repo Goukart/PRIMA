@@ -1,4 +1,4 @@
-namespace L02_Space_Invaders_v1 {
+namespace L02_Space_Invaders_v2 {
     import ƒ = FudgeCore;
 
     const MESH: ƒ.MeshQuad = new ƒ.MeshQuad("QuadMesh");

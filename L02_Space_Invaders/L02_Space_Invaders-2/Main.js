@@ -1,33 +1,23 @@
 "use strict";
-var L02_Space_Invaders_v1;
-(function (L02_Space_Invaders_v1) {
-    // 30.03.2021
+var L02_Space_Invaders_v2;
+(function (L02_Space_Invaders_v2) {
+    // 01.04.2021
     var ƒ = FudgeCore;
     /************************************************************************************
      * Task was:
-     * Build a static scene for the Space Invaders game. Just objects no functionality.
-     *
-     * Done today:
-     * Creating custom class for Invader
-     *
-     * Next task:
      * Restructure the code to shorten the init() method and use more classes.
      *
-     * Definitions:
-     * What is 0?
-     * The Origin point is center bottom, so the cannon moves on the x-axis. Other
-     * components like the score or other UI elements are outside the game area.
-     * Score is above the Invaders and lives are below the cannon (also in negative y)
+     * Done today:
      *
-     * What is 1?
-     * The projectile is 1 wide because the resolution is so low one pixel can be one
-     * and makes sense defining sized based on original width in pixel.
+     *
+     * Next task:
+     *
     ************************************************************************************/
     // Wait for elements in html to load
     window.addEventListener("load", init);
     const root = new ƒ.Node("rootNode");
     // Globally define the player character
-    const spaceCannon = L02_Space_Invaders_v1.Cannon.Instance;
+    const spaceCannon = L02_Space_Invaders_v2.Cannon.Instance;
     // Define the viewport to bring camera, scene and canvas together
     // Must also be declared here to be accessible in 'update' to draw all the frames 
     const viewport = new ƒ.Viewport();
@@ -45,7 +35,7 @@ var L02_Space_Invaders_v1;
         canvas // Where to render to, here the html canvas so the user can see it
         );
         // Build the Level
-        L02_Space_Invaders_v1.buildLevel(root, cmpCamera, spaceCannon);
+        L02_Space_Invaders_v2.buildLevel(root, cmpCamera, spaceCannon);
         // Start the game loop in real time mode at 60 fps
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
         // To couple our game to the "engine" with the 'update' function. 'update' gets called every frame
@@ -65,5 +55,5 @@ var L02_Space_Invaders_v1;
         _cmpCamera.mtxPivot.translateY(90);
         _cmpCamera.mtxPivot.rotateY(180);
     }
-})(L02_Space_Invaders_v1 || (L02_Space_Invaders_v1 = {}));
+})(L02_Space_Invaders_v2 || (L02_Space_Invaders_v2 = {}));
 //# sourceMappingURL=Main.js.map

@@ -1,4 +1,4 @@
-namespace L02_Space_Invaders_v1 {
+namespace L02_Space_Invaders_v2 {
     import ƒ = FudgeCore;
 
     export class GameObject extends ƒ.Node {

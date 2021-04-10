@@ -2,17 +2,21 @@
 var L02_Space_Invaders_v1;
 (function (L02_Space_Invaders_v1) {
     var ƒ = FudgeCore;
-    const colors = new Array("ALICEBLUE", "ANTIQUEWHITE", "AQUA", "AQUAMARINE", "AZURE", "BEIGE", "BISQUE", /*"BLACK",*/ "BLANCHEDALMOND", "BLUE", "BLUEVIOLET", "BROWN", "BURLYWOOD", "CADETBLUE", "CHARTREUSE", "CHOCOLATE", "CORAL", "CORNFLOWERBLUE", "CORNSILK", "CRIMSON", "CYAN", "DARKBLUE", "DARKCYAN", "DARKGOLDENROD", "DARKGRAY", "DARKGREY", "DARKGREEN", "DARKKHAKI", "DARKMAGENTA", "DARKOLIVEGREEN", "DARKORANGE", "DARKORCHID", "DARKRED", "DARKSALMON", "DARKSEAGREEN", "DARKSLATEBLUE", "DARKSLATEGRAY", "DARKSLATEGREY", "DARKTURQUOISE", "DARKVIOLET", "DEEPPINK", "DEEPSKYBLUE", "DIMGRAY", "DIMGREY", "DODGERBLUE", "FIREBRICK", "FLORALWHITE", "FORESTGREEN", "FUCHSIA", "GAINSBORO", "GHOSTWHITE", "GOLD", "GOLDENROD", "GRAY", "GREY", "GREEN", "GREENYELLOW", "HONEYDEW", "HOTPINK", "INDIANRED", "INDIGO", "IVORY", "KHAKI", "LAVENDER", "LAVENDERBLUSH", "LAWNGREEN", "LEMONCHIFFON", "LIGHTBLUE", "LIGHTCORAL", "LIGHTCYAN", "LIGHTGOLDENRODYELLOW", "LIGHTGRAY", "LIGHTGREY", "LIGHTGREEN", "LIGHTPINK", "LIGHTSALMON", "LIGHTSEAGREEN", "LIGHTSKYBLUE", "LIGHTSLATEGRAY", "LIGHTSLATEGREY", "LIGHTSTEELBLUE", "LIGHTYELLOW", "LIME", "LIMEGREEN", "LINEN", "MAGENTA", "MAROON", "MEDIUMAQUAMARINE", "MEDIUMBLUE", "MEDIUMORCHID", "MEDIUMPURPLE", "MEDIUMSEAGREEN", "MEDIUMSLATEBLUE", "MEDIUMSPRINGGREEN", "MEDIUMTURQUOISE", "MEDIUMVIOLETRED", "MIDNIGHTBLUE", "MINTCREAM", "MISTYROSE", "MOCCASIN", "NAVAJOWHITE", "NAVY", "OLDLACE", "OLIVE", "OLIVEDRAB", "ORANGE", "ORANGERED", "ORCHID", "PALEGOLDENROD", "PALEGREEN", "PALETURQUOISE", "PALEVIOLETRED", "PAPAYAWHIP", "PEACHPUFF", "PERU", "PINK", "PLUM", "POWDERBLUE", "PURPLE", "REBECCAPURPLE", "RED", "ROSYBROWN", "ROYALBLUE", "SADDLEBROWN", "SALMON", "SANDYBROWN", "SEAGREEN", "SEASHELL", "SIENNA", "SILVER", "SKYBLUE", "SLATEBLUE", "SLATEGRAY", "SLATEGREY", "SNOW", "SPRINGGREEN", "STEELBLUE", "TAN", "TEAL", "THISTLE", "TOMATO", "TURQUOISE", "VIOLET", "WHEAT", "WHITE", "WHITESMOKE", "YELLOW", "YELLOWGREEN");
+    //const colors: Array<string> = new Array<string>("ALICEBLUE", "ANTIQUEWHITE", "AQUA", "AQUAMARINE", "AZURE", "BEIGE", "BISQUE", /*"BLACK",*/ "BLANCHEDALMOND", "BLUE", "BLUEVIOLET", "BROWN", "BURLYWOOD", "CADETBLUE", "CHARTREUSE", "CHOCOLATE", "CORAL", "CORNFLOWERBLUE", "CORNSILK", "CRIMSON", "CYAN", "DARKBLUE", "DARKCYAN", "DARKGOLDENROD", "DARKGRAY", "DARKGREY", "DARKGREEN", "DARKKHAKI", "DARKMAGENTA", "DARKOLIVEGREEN", "DARKORANGE", "DARKORCHID", "DARKRED", "DARKSALMON", "DARKSEAGREEN", "DARKSLATEBLUE", "DARKSLATEGRAY", "DARKSLATEGREY", "DARKTURQUOISE", "DARKVIOLET", "DEEPPINK", "DEEPSKYBLUE", "DIMGRAY", "DIMGREY", "DODGERBLUE", "FIREBRICK", "FLORALWHITE", "FORESTGREEN", "FUCHSIA", "GAINSBORO", "GHOSTWHITE", "GOLD", "GOLDENROD", "GRAY", "GREY", "GREEN", "GREENYELLOW", "HONEYDEW", "HOTPINK", "INDIANRED", "INDIGO", "IVORY", "KHAKI", "LAVENDER", "LAVENDERBLUSH", "LAWNGREEN", "LEMONCHIFFON", "LIGHTBLUE", "LIGHTCORAL", "LIGHTCYAN", "LIGHTGOLDENRODYELLOW", "LIGHTGRAY", "LIGHTGREY", "LIGHTGREEN", "LIGHTPINK", "LIGHTSALMON", "LIGHTSEAGREEN", "LIGHTSKYBLUE", "LIGHTSLATEGRAY", "LIGHTSLATEGREY", "LIGHTSTEELBLUE", "LIGHTYELLOW", "LIME", "LIMEGREEN", "LINEN", "MAGENTA", "MAROON", "MEDIUMAQUAMARINE", "MEDIUMBLUE", "MEDIUMORCHID", "MEDIUMPURPLE", "MEDIUMSEAGREEN", "MEDIUMSLATEBLUE", "MEDIUMSPRINGGREEN", "MEDIUMTURQUOISE", "MEDIUMVIOLETRED", "MIDNIGHTBLUE", "MINTCREAM", "MISTYROSE", "MOCCASIN", "NAVAJOWHITE", "NAVY", "OLDLACE", "OLIVE", "OLIVEDRAB", "ORANGE", "ORANGERED", "ORCHID", "PALEGOLDENROD", "PALEGREEN", "PALETURQUOISE", "PALEVIOLETRED", "PAPAYAWHIP", "PEACHPUFF", "PERU", "PINK", "PLUM", "POWDERBLUE", "PURPLE", "REBECCAPURPLE", "RED", "ROSYBROWN", "ROYALBLUE", "SADDLEBROWN", "SALMON", "SANDYBROWN", "SEAGREEN", "SEASHELL", "SIENNA", "SILVER", "SKYBLUE", "SLATEBLUE", "SLATEGRAY", "SLATEGREY", "SNOW", "SPRINGGREEN", "STEELBLUE", "TAN", "TEAL", "THISTLE", "TOMATO", "TURQUOISE", "VIOLET", "WHEAT", "WHITE", "WHITESMOKE", "YELLOW", "YELLOWGREEN");
+    const MESH = new ƒ.MeshQuad("QuadMesh");
+    const MATERIAL = new ƒ.Material("WhiteMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("WHITE")));
+    // Constant Values
+    const screenWidth = 224;
+    const screenHight = 239;
     class Shield extends ƒ.Node {
         constructor(_name, _position) {
             super("Shield");
             this.material = new ƒ.Material("ShieldMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(0, 1, 0, 1)));
-            // Total width, also number of slices
-            this.width = 21;
-            // Total height
-            this.height = 16;
+            // also number of slices
+            this.totalWidth = 21;
+            this.totalHeight = 16;
             this.verticalCentering = -2;
-            this.horizontalCentering = -center(this.width);
+            this.horizontalCentering = -center(this.totalWidth);
             this.sliceHeights = [
                 12, 13, 14, 15, 16, 14, 13,
                 12, 12, 12, 12, 12, 12, 12,
@@ -24,27 +28,20 @@ var L02_Space_Invaders_v1;
                 3.5, 3, 2, 1.5, 1, 0.5, 0
             ];
             this.addComponent(new ƒ.ComponentTransform);
-            for (let index = 0; index < this.width; index++) {
-                const testMat = new ƒ.Material("ShieldTestMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS(colors[8 + index % 2])));
+            this.mtxLocal.translate(_position);
+            for (let index = 0; index < this.totalWidth; index++) {
                 const slicePosition = new ƒ.Vector3(index + this.horizontalCentering, this.sliceOffsetY[index] + this.verticalCentering, 0);
                 const sliceScale = new ƒ.Vector3(1, this.sliceHeights[index], 0);
-                const slice = new L02_Space_Invaders_v1.GameObject("Slice" + index, slicePosition, new ƒ.MeshCube("CubeMesh"), testMat, sliceScale);
-                // Conversion from relative translation to absolute
-                const absTranslation = new ƒ.Vector3(_position.x * (1 / this.width), _position.y * (1 / this.height), _position.z);
-                this.mtxLocal.translate(absTranslation);
-                //this.mtxLocal.translate(_position);
+                const slice = new L02_Space_Invaders_v1.GameObject("Slice" + index, slicePosition, MESH, this.material, sliceScale);
                 this.addChild(slice);
             }
-            this.addChild(new L02_Space_Invaders_v1.GameObject("", new ƒ.Vector3(0, 0, 0), new ƒ.MeshCube("CubeMesh"), this.material, new ƒ.Vector3(this.width, 1, 1)));
-            this.addChild(new L02_Space_Invaders_v1.GameObject("", new ƒ.Vector3(0, 0, 0), new ƒ.MeshCube("CubeMesh"), this.material, new ƒ.Vector3(1, this.height, 1)));
         }
     }
     class Projectile extends L02_Space_Invaders_v1.GameObject {
         constructor(_position) {
-            super("Projectile", _position, Projectile.mesh, Projectile.material, Projectile.scale);
+            super("Projectile", _position, MESH, Projectile.material, Projectile.scale);
         }
     }
-    Projectile.mesh = new ƒ.MeshQuad("QuadMesh");
     Projectile.material = new ƒ.Material("ProjectileMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("WHITE")));
     Projectile.scale = new ƒ.Vector3(1, 4, 0);
     L02_Space_Invaders_v1.Projectile = Projectile;
@@ -62,7 +59,7 @@ var L02_Space_Invaders_v1;
         _scene.addChild(sh);
         console.log(sh);
         */
-        // The entire screen is 224 wide and 239 high
+        _scene.addChild(createUI());
         _scene.addChild(createInvaders());
         _scene.addChild(createShields());
         _scene.addChild(_cannon.Node);
@@ -70,22 +67,30 @@ var L02_Space_Invaders_v1;
         _scene.addChild(new Projectile(new ƒ.Vector3(30, 35, 0)));
     }
     L02_Space_Invaders_v1.buildLevel = buildLevel;
+    function createUI() {
+        const rootUI = new ƒ.Node("rootUI");
+        // Lower line
+        rootUI.addChild(new L02_Space_Invaders_v1.GameObject("BottomLine", new ƒ.Vector3(0, -20, 0), MESH, MATERIAL, new ƒ.Vector3(screenWidth, 1, 0)));
+        // reference height // y=91, x=0 perfect center of screen
+        rootUI.addChild(new L02_Space_Invaders_v1.GameObject("HightReference", new ƒ.Vector3(-110, 91, 0), MESH, MATERIAL, new ƒ.Vector3(1, screenHight, 0)));
+        return rootUI;
+    }
     function createInvaders() {
         const rows = 5;
-        const numberOfInvaders = 11;
-        const numberOfSpaces = numberOfInvaders - 1;
+        const nInvaders = 11;
+        const nSpaces = nInvaders - 1;
         // 8 places them edge to edge, good to check alignment
         const spaceY = 16;
         // The actual space between them is 3 (total space from center to center is 3 + 12 (widest invader))
         const spaceX = 15;
         // Put them above the canon and shields 
-        const offsetY = 45;
+        const offsetY = 88;
         // Off set to the left to center them
-        const offsetX = -((numberOfSpaces / 2) * spaceX);
+        const offsetX = -((nSpaces / 2) * spaceX);
         const allInvaders = new ƒ.Node("AllInvaders");
         let invader;
         for (let row = 0; row < rows; row++) {
-            for (let invaderInRow = 0; invaderInRow < numberOfInvaders; invaderInRow++) {
+            for (let invaderInRow = 0; invaderInRow < nInvaders; invaderInRow++) {
                 switch (row) {
                     case 4:
                         // The squid must be off set to the left by half a unit to align like in the original
@@ -103,17 +108,18 @@ var L02_Space_Invaders_v1;
                 allInvaders.addChild(invader);
             }
         }
+        allInvaders.addChild(new L02_Space_Invaders_v1.UFO(new ƒ.Vector3(65, 175.5, 0)));
         return allInvaders;
     }
     function createShields() {
         const shields = new ƒ.Node("Shields");
         let shield = new Shield("Shield", ƒ.Vector3.ZERO());
-        const numberOfShields = 4;
-        const numberOfSpaces = numberOfShields - 1;
-        const spaceX = shield.width + 19;
-        const offsetX = -((numberOfSpaces / 2) * spaceX);
+        const nShields = 4;
+        const nSpaces = nShields - 1;
+        const spaceX = shield.totalWidth + 19;
+        const offsetX = -((nSpaces / 2) * spaceX);
         const offsetY = 19.5;
-        for (let index = 0; index < numberOfShields; index++) {
+        for (let index = 0; index < nShields; index++) {
             const position = new ƒ.Vector3(index * spaceX + offsetX, offsetY, 0);
             shield = new Shield("Shield_" + index, position);
             shields.addChild(shield);

@@ -1,27 +1,17 @@
-namespace L02_Space_Invaders_v1 {
-    // 30.03.2021
+namespace L02_Space_Invaders_v2 {
+    // 01.04.2021
     import ƒ = FudgeCore;
 
 
     /************************************************************************************
      * Task was:
-     * Build a static scene for the Space Invaders game. Just objects no functionality. 
-     * 
-     * Done today:
-     * Creating custom class for Invader
-     * 
-     * Next task:
      * Restructure the code to shorten the init() method and use more classes.
      * 
-     * Definitions:
-     * What is 0?
-     * The Origin point is center bottom, so the cannon moves on the x-axis. Other
-     * components like the score or other UI elements are outside the game area.
-     * Score is above the Invaders and lives are below the cannon (also in negative y)
+     * Done today:
      * 
-     * What is 1?
-     * The projectile is 1 wide because the resolution is so low one pixel can be one
-     * and makes sense defining sized based on original width in pixel.
+     * 
+     * Next task:
+     * 
     ************************************************************************************/
 
 

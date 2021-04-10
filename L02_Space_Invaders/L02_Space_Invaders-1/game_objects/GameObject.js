@@ -7,10 +7,7 @@ var L02_Space_Invaders_v1;
             super(_name);
             this.facade = new ƒ.Node("GameObjectFacade");
             this.scale = _scale || ƒ.Vector3.ONE();
-            //--------------------Render a quad plane to see something-----------------\\
-            // To move the mesh, we need to add an additional component to the mesh-holding-node,
-            // the ƒ.ComponentTransform component.
-            // This way we can later move the mesh around in the 'update' function
+            // Add component to move and scale the node
             this.addComponent(new ƒ.ComponentTransform());
             this.applyMaterial(_mesh, _material);
             this.mtxLocal.translate(_position);
