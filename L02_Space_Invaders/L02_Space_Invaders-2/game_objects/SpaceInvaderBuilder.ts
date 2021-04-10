@@ -27,13 +27,8 @@ namespace L02_Space_Invaders_v2 {
 
 
         public constructor(_name: string, _position: ƒ.Vector3, _scale: ƒ.Vector3, _coatTexture: ƒ.CoatTextured) {
-            // Since we don't want the Invader node to scale, we don't provide a value in the constructor
-            super(_name, _position, QUAD_MESH, new ƒ.Material("InvaderMaterial", ƒ.ShaderTexture, _coatTexture), _scale);
-            // But we do want to define the scale variable to scale the texture and hit box
-            this.scale = _scale;
- 
-            INVADER_MATERIAL.setCoat(_coatTexture);
-            this.applyMaterial(SPRITE_MESH, INVADER_MATERIAL);
+            super(_name, _position, SPRITE_MESH, new ƒ.Material("InvaderMaterial", ƒ.ShaderTexture, _coatTexture), _scale);
+            this.facade.name = _name + "Facade";
         }
     }
 
@@ -141,7 +136,7 @@ namespace L02_Space_Invaders_v2 {
 
         constructor(_position: ƒ.Vector3) {
             super("Projectile", _position, QUAD_MESH, MATERIAL, Projectile.scale);
-
+            
         }
     }
 

@@ -1,4 +1,4 @@
-namespace L02_Space_Invaders_v2 {
+namespace L02_Space_Invaders_v3 {
     import ƒ = FudgeCore;
 
 

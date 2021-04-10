@@ -1,27 +1,24 @@
 "use strict";
-var L02_Space_Invaders_v2;
-(function (L02_Space_Invaders_v2) {
-    // 01.04.2021
+var L02_Space_Invaders_v3;
+(function (L02_Space_Invaders_v3) {
+    // 08.04.2021
     var ƒ = FudgeCore;
     /************************************************************************************
      * Task was:
-     * Restructure the code to shorten the init() method and use more classes.
+     * Build projectile and add shooting functionality with event-driven with button press
+     * detection
      *
      * Done today:
-     * Edited code structure and added controls to player character
+     *
      *
      * Next task:
-     * Build projectile and add shooting functionality with event-driven with button
-     * press detection
+     *
     ************************************************************************************/
     // Wait for elements in html to load, then run init()
-    // (-> load event [ProgressEvent<XMLHttpRequestEventTarget>])
     window.addEventListener("load", init);
-    // Tell 'window' to run 'hndKey' on a 'keydown' event
-    // window.addEventListener("keydown", hndKey); // Was just a test
     const root = new ƒ.Node("rootNode");
     // Globally define the player character
-    const spaceCannon = L02_Space_Invaders_v2.Cannon.Instance;
+    const spaceCannon = L02_Space_Invaders_v3.Cannon.Instance;
     // Define the viewport to bring camera, scene and canvas together
     // Must also be declared here to be accessible in 'update' to draw all the frames 
     const viewport = new ƒ.Viewport();
@@ -39,7 +36,7 @@ var L02_Space_Invaders_v2;
         canvas // Where to render to, here the html canvas so the user can see it
         );
         // Build the Level
-        L02_Space_Invaders_v2.buildLevel(root, cmpCamera, spaceCannon);
+        L02_Space_Invaders_v3.buildLevel(root, cmpCamera, spaceCannon);
         // Space Cannon configuration
         spaceCannon.Speed = 50;
         // Start the game loop in real time mode at 60 fps
@@ -49,10 +46,6 @@ var L02_Space_Invaders_v2;
     }
     function update(_event) {
         //console.log(_event);
-        // Now we are polling. We check every frame which buttons are pressed and do something right then.
-        // With the previous method of waiting for events, we relied on the standard keyboard input, when
-        // typing, which is not responsive enough for controlling player characters.
-        console.log(ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT]));
         /*
         s = v * t (linear distance = velocity * time > distance/time; example: units/s)
         Take the desired speed (≙ units) and multiply it by the desired time (second) it should take,
@@ -79,22 +72,6 @@ var L02_Space_Invaders_v2;
         // Things are happening, but we can't see anything if we don't draw the changes
         viewport.draw();
     }
-    /*
-    function hndKey(_event: KeyboardEvent): void {
-        // Just checking which key was been pressed, send an initial signal, then after a 1-second pause
-        // a constant  stream of maybe 10 ticks per second is send. That is not how we want controlling
-        // keyboard input ti behave. So the alternative of this event-driven solution is polling.
-
-        // FUDGE has a built-in solution for that, which can be seen in the 'update' function above.
-        
-        console.log(_event);
-        //ƒ.Keyboard.mapToValue(1,0,[ƒ.KEYBOARD_CODE.A]);
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A]))
-            spaceCannon.move(-2);
-        else if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D]))
-            spaceCannon.move(2);
-    }
-    */
     function configureCamera(_cmpCamera, _canvas) {
         const deg2Rad = Math.PI / 180;
         const distance = 310; //310
@@ -109,5 +86,5 @@ var L02_Space_Invaders_v2;
         _cmpCamera.mtxPivot.translateY(90);
         _cmpCamera.mtxPivot.rotateY(180);
     }
-})(L02_Space_Invaders_v2 || (L02_Space_Invaders_v2 = {}));
+})(L02_Space_Invaders_v3 || (L02_Space_Invaders_v3 = {}));
 //# sourceMappingURL=Main.js.map

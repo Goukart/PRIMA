@@ -1,6 +1,6 @@
 "use strict";
-var L02_Space_Invaders_v2;
-(function (L02_Space_Invaders_v2) {
+var L02_Space_Invaders_v3;
+(function (L02_Space_Invaders_v3) {
     var ƒ = FudgeCore;
     class Cannon {
         constructor() {
@@ -19,7 +19,7 @@ var L02_Space_Invaders_v2;
                 offsetY - 1.5, 0);
                 offsetY += partsHeight[index] / 2 + 0.5; // 0,5 on top, for own height
                 scale = new ƒ.Vector3(partsWidth[index], partsHeight[index], 0);
-                part = new L02_Space_Invaders_v2.GameObject("Part_" + index, position, Cannon.mesh, Cannon.material, scale);
+                part = new L02_Space_Invaders_v3.GameObject("Part_" + index, position, Cannon.mesh, Cannon.material, scale);
                 this.facade.addChild(part);
             }
             Cannon.rootNode.addChild(this.facade);
@@ -48,6 +48,6 @@ var L02_Space_Invaders_v2;
     Cannon.width = 13;
     Cannon.height = 8;
     Cannon.speed = 1;
-    L02_Space_Invaders_v2.Cannon = Cannon;
-})(L02_Space_Invaders_v2 || (L02_Space_Invaders_v2 = {}));
+    L02_Space_Invaders_v3.Cannon = Cannon;
+})(L02_Space_Invaders_v3 || (L02_Space_Invaders_v3 = {}));
 //# sourceMappingURL=Cannon.js.map
