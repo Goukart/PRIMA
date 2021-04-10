@@ -28,12 +28,8 @@ var L02_Space_Invaders_v2;
             let cmpMaterial = new ƒ.ComponentMaterial(_material || defaultMaterial);
             // Now link the material to the node
             this.facade.addComponent(cmpMaterial);
-            // Scale facade repetition
-            //this.facade.getComponent(ƒ.ComponentMaterial).mtxPivot.scale(this.scale.toVector2());
             // Add the material to the node as a separate node
             this.addChild(this.facade);
-        }
-        translate() {
         }
     }
     L02_Space_Invaders_v2.GameObject = GameObject;

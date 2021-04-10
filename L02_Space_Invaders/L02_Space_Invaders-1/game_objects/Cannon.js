@@ -4,6 +4,7 @@ var L02_Space_Invaders_v1;
     var ƒ = FudgeCore;
     class Cannon {
         constructor() {
+            //private static height: number = 8;
             this.facade = new ƒ.Node("CannonFacade");
             Cannon.rootNode.addComponent(new ƒ.ComponentTransform());
             let position = new ƒ.Vector3();
@@ -35,7 +36,6 @@ var L02_Space_Invaders_v1;
     Cannon.mesh = new ƒ.MeshQuad("QuadMesh");
     Cannon.material = new ƒ.Material("CannonMaterial", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("LIME")));
     Cannon.width = 13;
-    Cannon.height = 8;
     L02_Space_Invaders_v1.Cannon = Cannon;
 })(L02_Space_Invaders_v1 || (L02_Space_Invaders_v1 = {}));
 //# sourceMappingURL=Cannon.js.map

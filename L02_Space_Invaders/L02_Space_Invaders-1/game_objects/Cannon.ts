@@ -14,7 +14,7 @@ namespace L02_Space_Invaders_v1 {
         );
 
         private static width: number = 13;
-        private static height: number = 8;
+        //private static height: number = 8;
 
 
         private readonly facade: ƒ.Node = new ƒ.Node("CannonFacade");

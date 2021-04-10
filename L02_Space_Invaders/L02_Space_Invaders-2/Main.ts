@@ -35,7 +35,7 @@ namespace L02_Space_Invaders_v2 {
         // Define the camera to view the scene from one perspective
         const cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
         // Move camera so 1px = 1 and all borders are actual borders
-        configureCamera(cmpCamera);
+        configureCamera(cmpCamera, canvas);
 
         // Here we tell the viewport alle the things it needs to know
         viewport.initialize(
@@ -62,14 +62,24 @@ namespace L02_Space_Invaders_v2 {
     }
 
 
-    function configureCamera(_cmpCamera: ƒ.ComponentCamera): void {
+    function configureCamera(_cmpCamera: ƒ.ComponentCamera, _canvas: HTMLCanvasElement): void {
         const deg2Rad: number = Math.PI / 180;
+        const distance = 310;
+
+        const fov: number = _cmpCamera.getFieldOfView();
+
+        let height: number = 2 * Math.abs(distance) * Math.tan(fov * 0.5 * deg2Rad);
+        let width: number = height * _cmpCamera.getAspect();
+
+        /**
+         *         const deg2Rad: number = Math.PI / 180;
         const distance = 310;
 
         const fov: number = _cmpCamera.getFieldOfView();
 
         let height: number = 2 * Math.abs(distance) * Math.tan(fov * 0.595 * deg2Rad);
         //let length: number = height * (_canvas.height / _canvas.width);
+         */
 
         _cmpCamera.mtxPivot.translateZ(distance);
         _cmpCamera.mtxPivot.translateY(90);

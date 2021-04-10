@@ -56,11 +56,7 @@ var L02_Space_Invaders_v1;
         viewport.draw();
     }
     function configureCamera(_cmpCamera) {
-        const deg2Rad = Math.PI / 180;
         const distance = 310;
-        const fov = _cmpCamera.getFieldOfView();
-        let height = 2 * Math.abs(distance) * Math.tan(fov * 0.595 * deg2Rad);
-        //let length: number = height * (_canvas.height / _canvas.width);
         _cmpCamera.mtxPivot.translateZ(distance);
         _cmpCamera.mtxPivot.translateY(90);
         _cmpCamera.mtxPivot.rotateY(180);
